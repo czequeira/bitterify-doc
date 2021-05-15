@@ -33,9 +33,11 @@ menuVisible.subscribeCallback('menu', (bind) => {
   }
 });
 
-const Nav = nav(MenuItems.map((i) => a(i.content, i.href))).setClasses(
-  'hidden md:block',
-);
+const Nav = nav(
+  MenuItems.map((i) =>
+    a(i.content, i.href).setClasses('pl-4 hover:text-gray-200'),
+  ),
+).setClasses('hidden md:block');
 const Svg = createComponent('svg');
 const SvgHtmlElement = Svg.getHtmlElement();
 
@@ -49,8 +51,10 @@ const ShowNav = button(() => (menuVisible.value = !menuVisible.value), '')
   .setChildren([Svg])
   .setClasses('md:hidden');
 
-const Header = header([Logo, Nav, ShowNav]).setClasses(
-  'flex justify-between bg-red-500 text-white px-4 py-3',
-);
+const Header = header([
+  div([Logo, Nav, ShowNav]).setClasses(
+    'flex justify-between md:container mx-auto px-4 py-3',
+  ),
+]).setClasses('bg-red-500 text-white');
 
 app([Header, Menu]).addLinks(['css/tailwindcss.css']);
