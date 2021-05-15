@@ -1,4 +1,4 @@
-import { a, app, button, div, header, nav } from 'bitterify';
+import { a, app, bind, button, div, header, nav } from 'bitterify';
 import { createComponent } from 'bitterify/lib/core';
 
 const Logo = div(['Bitterify']);
@@ -7,6 +7,7 @@ interface MenuItem {
   content: string;
   href: string;
 }
+
 const MenuItems: MenuItem[] = [
   { content: 'Home', href: '#' },
   { content: 'Docs', href: '#' },
@@ -18,10 +19,23 @@ const Menu = div(
     a(i.content, i.href).setClasses('py-2 hover:bg-red-500'),
   ),
 ).setClasses(
-  'flex flex-col text-white text-center w-full top-16 bg-red-600 p-0',
+  'hidden flex-col text-white text-center w-full top-16 bg-red-600 p-0 md:hidden',
 );
 
-const Nav = nav(MenuItems.map((i) => a(i.content, i.href)));
+const menuVisible = bind(false, 'boolean');
+menuVisible.subscribeCallback('menu', (bind) => {
+  if (bind.value) {
+    Menu.removeClasses('hidden');
+    Menu.addClasses('flex');
+  } else {
+    Menu.addClasses('hidden');
+    Menu.removeClasses('flex');
+  }
+});
+
+const Nav = nav(MenuItems.map((i) => a(i.content, i.href))).setClasses(
+  'hidden md:block',
+);
 const Svg = createComponent('svg');
 const SvgHtmlElement = Svg.getHtmlElement();
 
@@ -31,7 +45,9 @@ if (SvgHtmlElement instanceof HTMLElement) {
 </svg>`;
 }
 
-const ShowNav = button(() => console.log('click'), '').setChildren([Svg]);
+const ShowNav = button(() => (menuVisible.value = !menuVisible.value), '')
+  .setChildren([Svg])
+  .setClasses('md:hidden');
 
 const Header = header([Logo, Nav, ShowNav]).setClasses(
   'flex justify-between bg-red-500 text-white px-4 py-3',
