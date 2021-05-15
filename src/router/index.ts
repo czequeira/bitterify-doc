@@ -1,8 +1,6 @@
 import { router } from 'bitterify/lib';
-import { simple } from '../layout/simple';
-import { About } from '../views/About';
-import { Docs } from '../views/Docs';
-import { Home } from '../views/Home';
+import { simple } from '../layout';
+import { About, Docs, Home } from '../views';
 
 export const Router = router([
   { path: 'about', layout: simple, view: () => About },

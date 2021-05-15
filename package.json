@@ -25,7 +25,7 @@
   "scripts": {
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "serve": "bitter serve",
-    "css:dev": "tailwindcss build src/css/styles.css -o public/css/tailwindcss.css"
+    "css:dev": "tailwindcss build src/styles/tailwindcss.css -o public/css/tailwindcss.css"
   },
   "repository": {
     "type": "git",
